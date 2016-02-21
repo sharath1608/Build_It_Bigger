@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "app.sunshine.android.example.com.build_it_biffer"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        free {
+            applicationId "app.sunshine.android.example.com.build_it_biffer.free"
+        }
+        paid {
+            applicationId "app.sunshine.android.example.com.build_it_biffer.paid"
+        }
+    }
+
+    // To increase the max dex limit for multi-dex build
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
+}
+
+
+task initiateTestCases(dependsOn : ":backend:appengineRun"){
+    project(":backend").afterEvaluate { backend ->
+        backend.extensions.appengine.daemon = true
+    }
+    doLast{
+        println 'Started server!'
+    }
+    finalizedBy 'runTestCases'
+}
+
+
+task runTestCases(dependsOn : 'connectedAndroidTest'){
+    finalizedBy 'stopDevServer'
+    doLast{
+        println 'Done running test cases.. Closing server now'
+    }
+
+}
+task stopDevServer(dependsOn: ":backend:appengineStop"){
+    doLast{
+        println 'Stopped server!'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'junit:junit:4.12'
+    compile project(path: ':backend', configuration: 'android-endpoints')
+    compile project(':androidjokedisplaylib')
+    freeCompile 'com.google.android.gms:play-services:8.3.0'
+    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:multidex:1.0.0'
+}

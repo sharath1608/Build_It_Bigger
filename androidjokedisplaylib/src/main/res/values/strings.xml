@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">AndroidJokeDisplayLib</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="gif_source_array">
+        <item>http://i.giphy.com/eHO86fSBQUNKU.gif</item>
+        <item>http://i.giphy.com/10I5e2yNnaozOo.gif</item>
+        <item>http://i.giphy.com/1PgPvWLfXGkCY.gif</item>
+        <item>http://i.giphy.com/JDbx0yICUNdPW.gif</item>
+        <item>http://i.giphy.com/APcFiiTrG0x2.gif</item>
+        <item>http://i.giphy.com/qrHQ9oLXIMSY0.gif</item>
+        <item>http://i.giphy.com/fbUWl2JJezSbm.gif</item>
+        <item>http://i.giphy.com/iB7aWZ54LkpW0.gif</item>
+        <item>http://i.giphy.com/wWue0rCDOphOE.gif</item>
+        <item>http://i.giphy.com/ZqlvCTNHpqrio.gif</item>
+        <item>http://i.giphy.com/3oEduPHyDxIfz46ABa.gif</item>
+    </string-array>
+    <string name="base_url">http://i.giphy.com/</string>
+    <string name="gif_image">A gif image to replicate your exact feelings when your read the awesome joke!</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="fetch_error_toast">The server is not responding. Please close the app and try again</string>
+    <string name="fetch_error_user">Oops.. Something went wrong!</string>
+</resources>
