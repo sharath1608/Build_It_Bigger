@@ -30,13 +30,11 @@ public class JokeGenTestPaid extends ActivityInstrumentationTestCase2<MainActivi
         mTextView = (TextView) mActivity.findViewById(R.id.test_result_text);
     }
 
-
     @MediumTest
-    public void testReturnString(){
+    public void testValidReturnString(){
         TouchUtils.clickView(this, mButton);
         assertNotNull(mTextView.getText());
-        assertFalse(mTextView.getText().equals(""));
-        assertTrue(mTextView.getText().equals("This is not a random joke from java"));
+        assertFalse(mTextView.getText().toString().isEmpty());
+        assertFalse(mTextView.getText().equals(getActivity().getString(R.string.fetch_error_user)));
     }
-
 }

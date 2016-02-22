@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class JokeGenerator {
 
-    final int jokeSelectionSize = 10;
+    final int jokeSelectionSize = 15;
 
     public String fetchRandomjoke(){
 

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.jokeapp.backend.myApi.MyApi;
@@ -29,19 +30,13 @@ import app.sunshine.android.example.com.build_it_biffer.R;
  */
 public class MainFragment extends Fragment {
 
-    private String jokeString;
+    private Intent jokeIntent;
     private TextView mTestTv;
-
+    private ProgressBar progressBar;
     public MainFragment() {
         // Required empty public constructor
     }
 
-
-    @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            new EndpointTask().execute();
-        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,23 +45,17 @@ public class MainFragment extends Fragment {
             View root = inflater.inflate(R.layout.fragment_main, container, false);
             final Button jokeButton = (Button) root.findViewById(R.id.joke_button);
             mTestTv = (TextView) root.findViewById(R.id.test_result_text);
+            progressBar = (ProgressBar)root.findViewById(R.id.prog_bar_paid);
+            progressBar.setVisibility(View.INVISIBLE);
             jokeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent jokeIntent = new Intent(getActivity(), JokeDisplayActivity.class);
-                jokeIntent.putExtra(getString(R.string.joke_key), jokeString);
-                startActivity(jokeIntent);
-            }
-        });
+
+                @Override
+                public void onClick(View view) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    new EndpointTask().execute();
+                }
+            });
         return root;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // Make a new request so that a new string is displayed the next time.
-        new EndpointTask().execute();
     }
 
     // Async task to communicate with GCE development server and receive the joke as a string.
@@ -74,9 +63,12 @@ public class MainFragment extends Fragment {
         private MyApi myApiService = null;
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            jokeString = s;
+        protected void onPostExecute(String jokeString) {
+            super.onPostExecute(jokeString);
+            progressBar.setVisibility(View.GONE);
+            jokeIntent = new Intent(getActivity(), JokeDisplayActivity.class);
+            jokeIntent.putExtra(getString(R.string.joke_key), jokeString);
+            startActivity(jokeIntent);
             mTestTv.setText(jokeString);
         }
 

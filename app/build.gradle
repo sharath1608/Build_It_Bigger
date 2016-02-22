@@ -34,31 +34,6 @@ android {
     }
 }
 
-
-task initiateTestCases(dependsOn : ":backend:appengineRun"){
-    project(":backend").afterEvaluate { backend ->
-        backend.extensions.appengine.daemon = true
-    }
-    doLast{
-        println 'Started server!'
-    }
-    finalizedBy 'runTestCases'
-}
-
-
-task runTestCases(dependsOn : 'connectedAndroidTest'){
-    finalizedBy 'stopDevServer'
-    doLast{
-        println 'Done running test cases.. Closing server now'
-    }
-
-}
-task stopDevServer(dependsOn: ":backend:appengineStop"){
-    doLast{
-        println 'Stopped server!'
-    }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'

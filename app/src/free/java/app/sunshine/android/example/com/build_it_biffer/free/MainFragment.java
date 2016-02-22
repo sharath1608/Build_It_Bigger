@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+
 import com.example.jokeapp.backend.myApi.MyApi;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -28,54 +31,39 @@ import app.sunshine.android.example.com.build_it_biffer.R;
  */
 public class MainFragment extends Fragment {
 
-    private String jokeString;
     private InterstitialAd mInterstitialAd;
     private Intent mJokeIntent;
     private static String deviceId;
-
+    private ProgressBar progressBar;
     public MainFragment() {
         // Required empty public constructor
         }
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            new EndpointTask().execute();
-        }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
 
-            // Inflate the layout for this fragment
-            View root = inflater.inflate(R.layout.fragment_main, container, false);
-            final Button jokeButton = (Button) root.findViewById(R.id.joke_button);
-            AdView adView = (AdView) root.findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .build();
-            adView.loadAd(adRequest);
-            mInterstitialAd = new InterstitialAd(getActivity());
-            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            requestInterstitialAd();
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        final Button jokeButton = (Button) root.findViewById(R.id.joke_button);
+        progressBar = (ProgressBar) root.findViewById(R.id.prog_bar_free);
+        progressBar.setVisibility(View.INVISIBLE);
+        AdView adView = (AdView) root.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        adView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        requestInterstitialAd();
 
-            jokeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-
-                mJokeIntent = new Intent(getActivity(), JokeDisplayActivity.class);
-                mJokeIntent.putExtra(getString(R.string.joke_key), jokeString);
-                mInterstitialAd.setAdListener(new AdListener() {
-
-                    @Override
-                    public void onAdClosed() {
-                        startActivity(mJokeIntent);
-                    }
-                });
-            }
+        jokeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                new EndpointTask().execute();
+             }
         });
         return root;
     }
@@ -97,9 +85,22 @@ public class MainFragment extends Fragment {
         private MyApi myApiService = null;
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            jokeString = s;
+        protected void onPostExecute(String jokeString) {
+            super.onPostExecute(jokeString);
+            progressBar.setVisibility(View.GONE);
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            }
+
+            mJokeIntent = new Intent(getActivity(), JokeDisplayActivity.class);
+            mJokeIntent.putExtra(getString(R.string.joke_key), jokeString);
+            mInterstitialAd.setAdListener(new AdListener() {
+
+                @Override
+                public void onAdClosed() {
+                    startActivity(mJokeIntent);
+                }
+            });
         }
 
         @Override

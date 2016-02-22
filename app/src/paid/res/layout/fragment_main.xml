@@ -32,4 +32,14 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"/>
 
+    <ProgressBar
+        android:id="@+id/prog_bar_paid"
+        android:progress="0"
+        android:layout_below="@id/test_result_text"
+        android:layout_marginTop="20dp"
+        android:layout_width="20dp"
+        android:layout_marginLeft="180dp"
+        android:layout_marginStart="180dp"
+        android:layout_height="20dp"/>
+
 </RelativeLayout>
