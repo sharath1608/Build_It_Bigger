@@ -12,8 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -50,12 +48,6 @@ public class JokeDisplayFragment extends Fragment {
             progBar.setVisibility(View.GONE);
             return root;
         }
-
-        AdView adView = (AdView) root.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        adView.loadAd(adRequest);
         Ion.with(getActivity())
                 .load(Utils.returnRandomString(getActivity()))
                 .intoImageView(gifImageView)

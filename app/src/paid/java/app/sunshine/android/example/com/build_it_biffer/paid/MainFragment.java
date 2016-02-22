@@ -61,7 +61,13 @@ public class MainFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        // Make a new request so that a new string is displayed the next time.
+        new EndpointTask().execute();
+    }
 
     // Async task to communicate with GCE development server and receive the joke as a string.
     public class EndpointTask extends AsyncTask<Void,Void,String> {

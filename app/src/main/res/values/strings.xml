@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Build_It_Bigger</string>
+    <string name="app_name">LaughItOff</string>
     <string name="app_title_text">Random Legendary Joke Generator</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="root_url">http://10.0.3.2:8080/_ah/api/</string>
+    <string name="root_url">http://192.168.148.2:8080/_ah/api/</string>
     <string name="joke_key">myjoke</string>
 </resources>

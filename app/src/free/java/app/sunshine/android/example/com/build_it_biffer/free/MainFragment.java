@@ -81,9 +81,11 @@ public class MainFragment extends Fragment {
     }
 
     public void requestInterstitialAd(){
-        deviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+        // Uncomment the below line if using an emulator
+
+        //deviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
                 AdRequest inAdequest = new AdRequest.Builder()
-                        .addTestDevice(deviceId)
+                        .addTestDevice(getString(R.string.dev_id))
                         .build();
 
         mInterstitialAd.loadAd(inAdequest);

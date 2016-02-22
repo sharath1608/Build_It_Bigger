@@ -3,7 +3,6 @@
     package="app.sunshine.android.example.com.build_it_biffer" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
