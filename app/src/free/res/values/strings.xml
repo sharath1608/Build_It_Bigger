@@ -2,7 +2,7 @@
     <string name="app_name">LaughItOff-Free</string>
     <string name="app_title_text">Random Legendary Joke Generator</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="root_url">http://10.0.3.2:8080/_ah/api/</string>
+    <string name="root_url">http://10.0.2.2:8080/_ah/api/</string>
     <string name="joke_key">myjoke</string>
-    <string name="dev_id">70AB64E0A9CA834DF026E2798BE4A905</string>
+    <string name="dev_id"></string>
 </resources>
